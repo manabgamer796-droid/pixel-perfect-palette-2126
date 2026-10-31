@@ -67,9 +67,10 @@ export function formatCls(v: number | null | undefined): string {
 /** Core Web Vitals thresholds (lab values). */
 export function vitalBand(metric: "lcp" | "cls" | "tbt" | "fcp", v: number | null | undefined): ScoreBand {
   if (v == null) return "none";
-  const t = { lcp: [2500, 4000], cls: [0.1, 0.25], tbt: [200, 600], fcp: [1800, 3000] }[metric];
-  if (v <= t[0]) return "good";
-  if (v <= t[1]) return "average";
+  const t: Record<string, [number, number]> = { lcp: [2500, 4000], cls: [0.1, 0.25], tbt: [200, 600], fcp: [1800, 3000] };
+  const [a, b] = t[metric]!;
+  if (v <= a) return "good";
+  if (v <= b) return "average";
   return "poor";
 }
 
