@@ -14,7 +14,231 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_reports: {
+        Row: {
+          audit_id: string
+          created_at: string
+          id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          audit_id: string
+          created_at?: string
+          id?: string
+          title: string
+          user_id?: string
+        }
+        Update: {
+          audit_id?: string
+          created_at?: string
+          id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_reports_audit_id_fkey"
+            columns: ["audit_id"]
+            isOneToOne: true
+            referencedRelation: "audits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      audits: {
+        Row: {
+          accessibility: number | null
+          best_practices: number | null
+          cls: number | null
+          created_at: string
+          diagnostics: Json
+          fcp_ms: number | null
+          field_data: Json | null
+          id: string
+          lcp_ms: number | null
+          opportunities: Json
+          performance: number | null
+          seo: number | null
+          si_ms: number | null
+          strategy: string
+          tbt_ms: number | null
+          url: string
+          user_id: string
+          website_id: string | null
+        }
+        Insert: {
+          accessibility?: number | null
+          best_practices?: number | null
+          cls?: number | null
+          created_at?: string
+          diagnostics?: Json
+          fcp_ms?: number | null
+          field_data?: Json | null
+          id?: string
+          lcp_ms?: number | null
+          opportunities?: Json
+          performance?: number | null
+          seo?: number | null
+          si_ms?: number | null
+          strategy: string
+          tbt_ms?: number | null
+          url: string
+          user_id?: string
+          website_id?: string | null
+        }
+        Update: {
+          accessibility?: number | null
+          best_practices?: number | null
+          cls?: number | null
+          created_at?: string
+          diagnostics?: Json
+          fcp_ms?: number | null
+          field_data?: Json | null
+          id?: string
+          lcp_ms?: number | null
+          opportunities?: Json
+          performance?: number | null
+          seo?: number | null
+          si_ms?: number | null
+          strategy?: string
+          tbt_ms?: number | null
+          url?: string
+          user_id?: string
+          website_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audits_website_id_fkey"
+            columns: ["website_id"]
+            isOneToOne: false
+            referencedRelation: "websites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          business_name: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          business_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          user_id?: string
+          website?: string | null
+        }
+        Update: {
+          business_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      notification_preferences: {
+        Row: {
+          audit_complete: boolean
+          product_updates: boolean
+          updated_at: string
+          user_id: string
+          weekly_summary: boolean
+        }
+        Insert: {
+          audit_complete?: boolean
+          product_updates?: boolean
+          updated_at?: string
+          user_id?: string
+          weekly_summary?: boolean
+        }
+        Update: {
+          audit_complete?: boolean
+          product_updates?: boolean
+          updated_at?: string
+          user_id?: string
+          weekly_summary?: boolean
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          company: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          plan: string
+          updated_at: string
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          plan?: string
+          updated_at?: string
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          plan?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      websites: {
+        Row: {
+          client_id: string | null
+          created_at: string
+          id: string
+          name: string
+          url: string
+          user_id: string
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          url: string
+          user_id?: string
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          url?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "websites_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
