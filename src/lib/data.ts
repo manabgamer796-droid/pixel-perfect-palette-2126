@@ -32,7 +32,7 @@ export const useAudits = () =>
 export const useAudit = (id: string) =>
   useQuery({
     queryKey: ["audit", id],
-    queryFn: async () => unwrap(await supabase.from("audits").select("*").eq("id", id).maybeSingle()),
+    queryFn: async () => unwrap<Audit | null>((await supabase.from("audits").select("*").eq("id", id).maybeSingle()) as never),
   });
 
 export const useWebsites = () =>
@@ -54,7 +54,7 @@ export const useProfile = (userId?: string) =>
     queryKey: ["profile", userId],
     enabled: !!userId,
     queryFn: async () =>
-      unwrap(await supabase.from("profiles").select("*").eq("id", userId!).maybeSingle()),
+      unwrap<Profile | null>((await supabase.from("profiles").select("*").eq("id", userId!).maybeSingle()) as never),
   });
 
 export const usePrefs = (userId?: string) =>
@@ -62,7 +62,7 @@ export const usePrefs = (userId?: string) =>
     queryKey: ["prefs", userId],
     enabled: !!userId,
     queryFn: async () =>
-      unwrap(await supabase.from("notification_preferences").select("*").eq("user_id", userId!).maybeSingle()),
+      unwrap<Prefs | null>((await supabase.from("notification_preferences").select("*").eq("user_id", userId!).maybeSingle()) as never),
   });
 
 type Tbl = "clients" | "websites" | "audits";
@@ -70,7 +70,7 @@ type Tbl = "clients" | "websites" | "audits";
 export function useUpsert(table: "clients" | "websites") {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, values }: { id?: string; values: Record<string, unknown> }) => {
+    mutationFn: async ({ id, values }: { id?: string | undefined; values: Record<string, unknown> }) => {
       if (id) {
         unwrap(await supabase.from(table).update(values as never).eq("id", id).select());
       } else {
