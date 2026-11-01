@@ -28,7 +28,7 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
 
-  async function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent): Promise<unknown> {
     e.preventDefault();
     if (password.length < 8) return toast.error("Password must be at least 8 characters.");
     setBusy(true);
@@ -38,7 +38,7 @@ function AuthPage() {
     setBusy(false);
     if (res.error) return toast.error(res.error.message);
     if (signup && !res.data.session) return toast.success("Check your email to confirm your account.");
-    navigate({ to: "/dashboard" });
+    return navigate({ to: "/dashboard" });
   }
 
   return (
