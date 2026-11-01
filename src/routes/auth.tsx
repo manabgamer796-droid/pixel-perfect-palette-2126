@@ -38,7 +38,7 @@ function AuthPage() {
     setBusy(false);
     if (res.error) return toast.error(res.error.message);
     if (signup && !res.data.session) return toast.success("Check your email to confirm your account.");
-    navigate({ to: "/dashboard" });
+    return navigate({ to: "/dashboard" });
   }
 
   return (
